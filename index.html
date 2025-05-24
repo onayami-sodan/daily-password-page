@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>本日のパスワード</title>
+  <style>
+    body {
+      font-family: "Hiragino Kaku Gothic ProN", sans-serif;
+      text-align: center;
+      padding: 2em;
+      background-color: #fffafc;
+    }
+    .box {
+      background: #ffeef5;
+      border-radius: 16px;
+      padding: 2em;
+      display: inline-block;
+      font-size: 1.5em;
+      color: #333;
+    }
+    h1 {
+      font-size: 1.8em;
+      margin-bottom: 1em;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎁 本日のパスワード</h1>
+  <div class="box" id="passwordBox">生成中です…</div>
+
+  <script>
+    const seed = new Date().toISOString().slice(0, 10);
+    let hash = 0;
+    for (let i = 0; i < seed.length; i++) {
+      hash = seed.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let password = '';
+    for (let i = 0; i < 6; i++) {
+      password += chars.charAt(Math.abs((hash + i * 17) % chars.length));
+    }
+    document.getElementById("passwordBox").innerText = password;
+  </script>
+</body>
+</html>
